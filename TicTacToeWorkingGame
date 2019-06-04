@@ -1,0 +1,125 @@
+import java.util.Scanner;
+
+public class TicTacToe {
+	
+	static char[][] Board = new char[3][3];
+	static char CurrentMark = 'x';
+	static int moves;
+	
+	
+	public static void main(String[] args) {
+		System.out.println(" ");
+		System.out.println("Welcome to Tic Tac Toe");
+		System.out.println("Please follow every normal rule of Tic Tac Toe");
+		System.out.println("If you play  oversome you will play again");
+		System.out.println("Please write the location to play in two seperate numbers");
+		System.out.println("The Board Shown below is the numbers for each location of the board ");
+		
+		System.out.println(" ");
+		System.out.println("|-----|-----|-----|");
+		System.out.println("| " + "0 0" + " | " + "0 1" + " | " + "0 2" + " |");
+		System.out.println("|-----|-----|-----|");
+		System.out.println("| " + "1 0" + " | " + "1 1" + " | " + "1 2" + " |");
+		System.out.println("|-----|-----|-----|");
+		System.out.println("| " + "2 0" + " | " + "2 1"+ " | " + "2 2" + " |");
+		System.out.println("|-----|-----|-----|");
+		System.out.println(" ");
+		
+		while(gameOver() == false) {
+			move();
+			printBoard();
+			if(gameWon()) {
+				System.out.println("The game is over");
+				System.out.println(CurrentMark + " Wins");
+			}
+			else if(gameOver()) {
+				System.out.println("The game is over");
+				System.out.println("Tie");
+			}
+			changeMarker();
+		}
+		
+	}
+	
+	static void changeMarker() {
+		if(moves %2 == 1) {
+			CurrentMark = 'o';
+		}
+		if(moves %2 == 0) {
+			CurrentMark = 'x';
+		}
+		
+	}
+	
+	static void reset() {
+		for(int r = 0;r<3;r++) {
+			for(int c = 0;c<3;c++) {
+				Board[r][c] = ' ';
+			}
+		}
+		moves = 0;
+		CurrentMark = 'x';
+	}
+	
+	static void move() {
+		
+		System.out.println("      " + CurrentMark +"'s Turn");
+		Scanner Move = new Scanner(System.in);
+		System.out.print("Move Row # , Column #:");
+		int r = Move.nextInt();
+		int c = Move.nextInt();	
+		
+		if((Board[r][c] == 'x') ||(Board[r][c] == 'o')) {
+			System.out.println("Someone already played there");
+		}
+		if((Board[r][c] != 'x') &&(Board[r][c] != 'o')) {
+			Board[r][c]= CurrentMark;
+			moves++;
+		}
+		
+	}
+	
+	static boolean gameOver() {
+		if(moves >= 9) {
+			return true;
+		}
+		if(gameWon()) {
+			return true;
+		}
+		return false;
+			
+	}
+	
+	static boolean gameWon() {
+		for(int r =0; r<3;r++) {
+			
+			if((Board[r][0]==Board[r][1]&&Board[r][2]==Board[r][1])&&(Board[r][0]== 'x'||Board[r][0]== 'o')) {
+				return true;
+			}
+			if((Board[0][r]==Board[1][r]&&Board[2][r]==Board[1][r])&&(Board[0][r]== 'x'||Board[0][r]== 'o')) {
+				return true;
+			}
+			
+		}
+		if((Board[0][0]==Board[1][1]&&Board[2][2]==Board[1][1])&&(Board[0][0]== 'x'||Board[0][0]== 'o')) {
+			return true;
+		}
+		if((Board[0][2]==Board[1][1]&&Board[2][0]==Board[1][1])&&(Board[1][1]== 'x'||Board[1][1]== 'o')) {
+			return true;
+		}
+		return false;
+	}
+	
+	static void printBoard() {
+		System.out.println(" ");
+		System.out.println("|---|---|---|");
+		System.out.println("| " + Board[0][0] + " | " + Board[0][1] + " | " + Board[0][2] + " |");
+		System.out.println("|-----------|");
+		System.out.println("| " + Board[1][0] + " | " + Board[1][1] + " | " + Board[1][2] + " |");
+		System.out.println("|-----------|");
+		System.out.println("| " + Board[2][0] + " | " + Board[2][1] + " | " + Board[2][2] + " |");
+		System.out.println("|---|---|---|");
+		System.out.println(" ");
+		
+	}
+}
